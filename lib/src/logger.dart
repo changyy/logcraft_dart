@@ -46,7 +46,8 @@ class Logger {
   // 初始化方法
   static Future<void> init(LoggerConfig config) async {
     if (_initialized) {
-      throw StateError('Logger has already been initialized');
+      //throw StateError('Logger has already been initialized');
+      await dispose();
     }
 
     _sinks.addAll(config.sinks);

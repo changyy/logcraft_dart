@@ -1,3 +1,21 @@
+## 1.0.1
+
+### Enhancements
+- Improved initialization handling
+  - Added automatic resource cleanup when re-initializing Logger
+  - No longer requires manual `dispose()` call before re-initialization
+  - More user-friendly initialization process
+
+### Example
+```dart
+// Before (1.0.0):
+await Logger.dispose();  // Manual dispose required
+await Logger.init(newConfig);
+
+// Now (1.0.1):
+await Logger.init(newConfig);  // Automatic cleanup and re-initialization
+```
+
 ## 1.0.0
 
 Initial release with the following features:

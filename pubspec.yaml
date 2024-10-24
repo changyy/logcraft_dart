@@ -1,6 +1,6 @@
 name: logcraft
 description: A flexible, cross-platform logging solution for Dart and Flutter applications with async operations and environment-based configuration.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/changyy/logcraft_dart
 repository: https://github.com/changyy/logcraft_dart
 issue_tracker: https://github.com/changyy/logcraft_dart/issues
