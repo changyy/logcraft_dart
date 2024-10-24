@@ -172,6 +172,19 @@ Future<void> example4_level_based_files() async {
   print('- app.info.log (info logs)');
 }
 
+Future<void> example5_console_without_init() async {
+  print('\n=== Example 5: Console without init Output ===');
+
+  await Logger.info('Starting application...');
+  await Logger.debug('Debug mode enabled');
+  await Logger.warning('Low memory warning');
+  await Logger.error('Failed to connect to service');
+
+  await Logger.dispose();
+}
+
+
+
 /// 主函數運行所有示例
 void main() async {
   // 運行所有示例
@@ -179,6 +192,7 @@ void main() async {
   await example2_file();
   await example3_console_and_file();
   await example4_level_based_files();
+  await example5_console_without_init();
 
   print(
       '\nAll examples completed. Check example_output/ directory for log files.');

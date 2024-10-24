@@ -1,3 +1,41 @@
+## 1.1.1
+
+### Architecture Changes
+- Removed mandatory initialization requirement
+  - Functions no longer throw exceptions when called without initialization
+  - All operations silently skip when Logger is not initialized
+  - Improved flexibility for class inheritance scenarios
+
+### Behavioral Changes
+- Default skip-all behavior when uninitialized
+  - All logging operations safely no-op without initialization
+  - No exceptions thrown for uninitialized state
+  - Backwards compatible with explicit initialization
+
+### Use Cases
+```dart
+// Before (1.1.0):
+class A {
+  void someMethod() {
+    Logger.info("Message");  // Would throw exception if not initialized
+  }
+}
+
+// Now (1.1.1):
+class A {
+  void someMethod() {
+    Logger.info("Message");  // Safely skips if not initialized
+  }
+}
+
+class B extends A {
+  B() {
+    // Can optionally initialize logger based on requirements
+    Logger.init(config);
+  }
+}
+```
+
 ## 1.1.0
 
 ### Major Changes

@@ -123,7 +123,11 @@ class Logger {
   static Future<void> _log(LogLevel level, String message,
       [Object? error, StackTrace? stackTrace]) async {
     if (!_initialized) {
-      throw StateError('Logger has not been initialized');
+      //
+      //throw StateError('Logger has not been initialized');
+      //
+      //skip log if not initialized
+      return;
     }
 
     await _lock.synchronized(() async {
