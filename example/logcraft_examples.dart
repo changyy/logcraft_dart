@@ -183,8 +183,6 @@ Future<void> example5_console_without_init() async {
   await Logger.dispose();
 }
 
-
-
 /// 主函數運行所有示例
 void main() async {
   // 運行所有示例

@@ -55,13 +55,13 @@ class Logger {
         //throw StateError('Logger has already been initialized');
         await dispose();
       }
-      
+
       try {
         _sinks.addAll(config.sinks);
         _environment = config.environment;
         _level = config.initialLevel;
         _initialized = true;
-        
+
         // 只在沒有明確設置日誌級別時應用環境設置
         if (_level == config.initialLevel) {
           _applyEnvironmentLogLevel(_environment);
@@ -134,9 +134,10 @@ class Logger {
       if (level.value <= _level.value) {
         final timestamp = _getTimestamp();
         final prefix = '[$timestamp][${level.toString()}]';
-        
-        final logMessage = _formatLogMessage(prefix, message, error, stackTrace);
-        
+
+        final logMessage =
+            _formatLogMessage(prefix, message, error, stackTrace);
+
         // 分別處理每個 sink 的錯誤
         final futures = _sinks.map((sink) async {
           try {
@@ -146,24 +147,24 @@ class Logger {
             print('Sink error: $e\n$stackTrace');
           }
         });
-        
+
         await Future.wait(futures);
       }
     });
   }
 
-  static String _formatLogMessage(String prefix, String message, 
-      Object? error, StackTrace? stackTrace) {
+  static String _formatLogMessage(
+      String prefix, String message, Object? error, StackTrace? stackTrace) {
     final buffer = StringBuffer();
     buffer.write('$prefix $message');
-    
+
     if (error != null) {
       buffer.write('\n$prefix Error details: $error');
     }
     if (stackTrace != null) {
       buffer.write('\n$prefix Stack trace:\n$stackTrace');
     }
-    
+
     return buffer.toString();
   }
 

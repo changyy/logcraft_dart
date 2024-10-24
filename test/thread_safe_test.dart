@@ -9,8 +9,8 @@ class TestSink implements LogSink {
 
   @override
   Future<void> write(String message, LogLevel level) async {
-    await Future.delayed(Duration(milliseconds: 
-        DateTime.now().millisecond % 10));
+    await Future.delayed(
+        Duration(milliseconds: DateTime.now().millisecond % 10));
     messages.add(message);
     levels.add(level);
   }
@@ -42,7 +42,7 @@ void main() {
       });
 
       await Future.wait(futures);
-      
+
       expect(testSink.disposed, true);
       await Logger.info('test message');
       expect(testSink.messages.length, 1);
@@ -72,11 +72,12 @@ void main() {
 
       // 先確保在 development 環境下可以寫入 debug 日誌
       await Logger.debug('Initial debug message');
-      expect(testSink.messages.length, 1, reason: 'Development 環境應該可以寫入 debug 日誌');
+      expect(testSink.messages.length, 1,
+          reason: 'Development 環境應該可以寫入 debug 日誌');
 
       // 切換到 production 環境
       Logger.setEnvironment(Environment.production);
-      
+
       // 清空之前的消息
       testSink.messages.clear();
       testSink.levels.clear();
@@ -91,16 +92,12 @@ void main() {
       ]);
 
       // 在 production 環境下，只有 error 級別以上的日誌應該被寫入
+      expect(testSink.messages.length, 1,
+          reason: 'Production 環境應該只寫入 error 級別的日誌');
       expect(
-        testSink.messages.length, 
-        1, 
-        reason: 'Production 環境應該只寫入 error 級別的日誌'
-      );
-      expect(
-        testSink.levels.every((level) => level.value <= LogLevel.error.value), 
-        true,
-        reason: '所有寫入的日誌級別應該小於或等於 error'
-      );
+          testSink.levels.every((level) => level.value <= LogLevel.error.value),
+          true,
+          reason: '所有寫入的日誌級別應該小於或等於 error');
     });
 
     test('並發 dispose 測試', () async {
@@ -109,9 +106,10 @@ void main() {
         environment: Environment.development,
       ));
 
-      final disposeFutures = List<Future<void>>.generate(5, (_) => Logger.dispose());
-      final logFutures = List<Future<void>>.generate(10, (i) => 
-          Logger.info('Message during dispose $i'));
+      final disposeFutures =
+          List<Future<void>>.generate(5, (_) => Logger.dispose());
+      final logFutures = List<Future<void>>.generate(
+          10, (i) => Logger.info('Message during dispose $i'));
 
       await Future.wait([
         ...disposeFutures,
